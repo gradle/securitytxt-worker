@@ -1,0 +1,11 @@
+Contact: https://github.com/gradle/.github/blob/master/SECURITY.md
+Contact: mailto:security@gradle.com
+
+Preferred-Languages: en
+
+Canonical: https://gradle.org/.well-known/security.txt
+Canonical: https://gradle.com/.well-known/security.txt
+
+Policy: https://github.com/gradle/.github/blob/master/SECURITY.md
+# Search for Security :)
+Hiring: https://gradle.com/careers/
