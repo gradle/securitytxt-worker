@@ -1,8 +1,15 @@
 name = "securitytxt-worker"
 type = "webpack"
 webpack_config = "webpack.config.js"
+workers_dev = false
+
+[env.gradle-com]
 account_id = ""
 zone_id = ""
-workers_dev = false
-routes = ["https://www.cloudflare.com/.well-known/security.txt", "https://www.cloudflare.com/gpg/security-cloudflare-public-06A67236.txt"]
+routes = ["https://gradle.com/.well-known/security.txt"]
+[env.gradle-org]
+account_id = ""
+zone_id = ""
+routes = ["https://gradle.org/.well-known/security.txt"]
+
 

@@ -3,24 +3,20 @@
 
 # Dependecies
 clean:
-	rm -f src/txt/security.txt
 	rm -rf ./worker/ ./dist/
 
-sign:
-	gpg --local-user security@cloudflare.com -o src/txt/security.txt --clearsign src/txt/security.txt.temp
-	rm src/txt/security.txt.temp
-
-expire:
-	cp src/txt/security.txt.template src/txt/security.txt.temp
-	node ./src/expires.js
-
-build: clean expire sign
-
 # Interfaces
-dev: build
-	wrangler dev
+dev-com: clean
+	wrangler dev --env gradle-com
 
-deploy: build
-	wrangler publish
+dev-org: clean
+	wrangler dev --env gradle-org
 
-.PHONY: clean deploy sign expire dev
+deploy-com: clean
+	wrangler publish --env gradle-com
+
+deploy-org: clean
+	wrangler publish --env gradle-org
+
+
+.PHONY: clean deploy-com deploy-dev dev-com dev-org

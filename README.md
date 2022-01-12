@@ -1,6 +1,10 @@
 # security.txt as a service -- Built on Cloudflare Workers
 
-This is the worker that serves [security.txt](https://securitytxt.org) on [cloudflare.com](https://cloudflare.com)
+This is a fork of the original project by cloudflare.
+The configuration in this repository has been modified for Gradle's use.
+
+This is the worker that serves [security.txt](https://securitytxt.org) on
+[gradle.com](https://gradle.com) and [gradle.org](https://gradle.org).
 
 ## Background
 
@@ -14,24 +18,9 @@ organizations define the process for security researchers to disclose security v
 securely.
 ```
 
-Many reporters have difficulty finding our disclosure page (https://www.cloudflare.com/disclosure) and often submit tickets to our support staff who then inform them about our HackerOne program. The security.txt standard was submitted to the IETF to address this problem: https://tools.ietf.org/html/draft-foudil-securitytxt-08
-
-We wanted to open source this code to allow anyone to easily deploy security.txt onto their Cloudflare zone.
-
 ## Steps for deployment
 
 Deploying should take about 5 minutes or less.
-
-The `Expires` field introduced in Draft-9 is appended to the template
-automatically at a default value of 1 year after deployment.
-
-### Dependencies
-
-**Debian based systems**
-
-```sh
-sudo apt-get install build-essential gnupg -y
-```
 
 **macOS**
 
@@ -64,41 +53,17 @@ You can do this at (https://dash.cloudflare.com/profile/api-tokens),
 and choose the "Edit Cloudflare Workers" template.
 We will later call the obtained token: `${TOKEN}`.
 
+#### 2. Testing Changes
 
-#### 2. Setup GPG
-
-You will need to have a pre-existing GPG key in your keyring that's additionally uploaded to some public key server (tutorial here: [https://wiki.debian.org/Keysigning](https://wiki.debian.org/Keysigning)).
-
-1. Export the public key and replace the one in this repo:
-
-```sh
-mv src/txt/security-cloudflare-public-06A67236.txt src/txt/my-pub-key.txt
-gpg --export --armor your@email.com > src/txt/my-pub-key.txt
-```
-
-2. Then, update the path within the workers script to the new name of the public key file:
-
-```js
-import pubKey from './txt/my-pub-key.txt'
-
-// and later ...
-
-} else if (url.includes('/gpg/my-pub-key.txt')) {
-```
-
-3. Finally, update the email within the Makefile:
-
-```
-sign: clean
-	gpg --local-user your@email.com -o src/txt/security.txt --clearsign src/txt/security.txt.template
+You can test your changes locally by running either:
+```bash
+make dev-com
+make dev-org 
 ```
 
 #### 3. Deploy
 
-To deploy with the token, you can choose one of the following options:
+You must deploy to each zone independently.
 
-a. Execute: `wrangler config`. 
-   Enter token: `${TOKEN}`. 
-   Run: `make deploy`
-
-b. Run: `CF_API_TOKEN=${token} make deploy`
+a. Run: `CF_API_TOKEN=${token} make deploy-com`
+b. Run: `CF_API_TOKEN=${token} make deploy-org`
