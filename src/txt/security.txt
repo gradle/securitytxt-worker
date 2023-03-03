@@ -9,3 +9,5 @@ Canonical: https://gradle.com/.well-known/security.txt
 Policy: https://github.com/gradle/.github/blob/master/SECURITY.md
 # Search for Security :)
 Hiring: https://gradle.com/careers/
+
+Expires: 2024-04-01T00:00:00z
